@@ -1,0 +1,7 @@
+{
+    "require": {
+        "morrislaptop/firestore-php": "^2.2",
+        "kreait/firebase-php": "^4.35",
+        "ahsankhatri/firestore-php": "^2.0"
+    }
+}
