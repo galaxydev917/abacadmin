@@ -46,6 +46,7 @@
                 <div class="page-content-wrapper">
                     <!-- BEGIN CONTENT BODY -->
                     <div class="page-content">
+                    <form id="category_form" method="post">
 
                         <div class="row">
                             <div class="col-md-12">
@@ -57,29 +58,23 @@
                                             <span class="caption-subject bold uppercase"> Categories</span>
                                         </div>
                                     </div>
-                                    <div class="portlet-body">
-                                        <div class="table-toolbar">
+                                    <div class="portlet-body" style="width:50%;">
+                                    <div class="table-toolbar">
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="btn-group">
-                                                       <!-- <button id="sample_editable_1_new" class="btn sbold green"> Add New
+                                                        <button id="sample_editable_1_new" class="btn sbold green"  onclick="gotoAddpage();"> Add New
                                                             <i class="fa fa-plus"></i>
-                                                        </button>-->
+                                                        </button>
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
+                                        </div>                                    
+                                        <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1" >
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                            <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" />
-                                                            <span></span>
-                                                        </label>
-                                                    </th>
-                                                    <th> Category Name </th>
-                                                    <th> Actions </th>
+                                                    <th style="width:80%"> Category Name </th>
+                                                    <th style="width:20%"> Actions </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
@@ -87,22 +82,16 @@
                                                 require '../FirebaseCls.php';
                                                 $firebase = new FirebaseCls("categories");    
                                                 $categoriesFromFirebase = $firebase->get();
-
-                                                foreach ($categoriesFromFirebase as $document) {
+                                                
+                                                foreach ($categoriesFromFirebase as $key => $value) {
                                                             
                                                 ?>
                                                 <tr class="odd gradeX">
-                                                    <td>
-                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                            <input type="checkbox" class="checkboxes" value="1" />
-                                                            <span></span>
-                                                        </label>
-                                                    </td>
-                                                    <td> <?php echo $document['name'] ?></td>
-                                                    <td>
+                                                    <td style="width:80%"> <?php echo $value['name'] ?></td>
+                                                    <td style="width:20%">
                                                         <div class="btn-group">
-                                                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                                                <i class="fa fa-angle-down"></i>
+                                                            <button class="btn btn-xs green dropdown-toggle" onclick="removeActivity('<?php echo $key ?>');" type="button" data-toggle="dropdown" aria-expanded="false" > Remove
+                                                               
                                                             </button>
 
                                                         </div>
@@ -120,7 +109,7 @@
                             </div>
                         </div>
 
-
+                    </form>                         
                     </div>
                     <!-- END CONTENT BODY -->
                 </div>
@@ -142,7 +131,27 @@
         </div>
 
     </body>
+    <script>
+        function gotoAddpage(){
+            var formObj = document.getElementById("category_form");
+            formObj.action = "add_category.php";
+            formObj.submit();
+        }
 
+        function removeActivity(id){
+            alert("Are you sure delete category?");
+            $.ajax({
+                type: "POST",  
+                url: "remove_action.php",  
+                data: ({id: id}),
+                dataType: "json",       
+                success: function(response)  
+                {
+                   window.location.reload();
+                }   
+            });            
+        }         
+    </script>    
 </html>
 
 

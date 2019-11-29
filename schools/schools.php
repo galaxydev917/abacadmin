@@ -46,6 +46,7 @@
                 <div class="page-content-wrapper">
                     <!-- BEGIN CONTENT BODY -->
                     <div class="page-content">
+                    <form id="school_form" method="post">
 
                         <div class="row">
                             <div class="col-md-12">
@@ -62,7 +63,7 @@
                                             <div class="row">
                                                 <div class="col-md-6">
                                                     <div class="btn-group">
-                                                        <button id="sample_editable_1_new" class="btn sbold green"> Add New
+                                                        <button id="sample_editable_1_new" class="btn sbold green"  onclick="gotoAddpage();"> Add New
                                                             <i class="fa fa-plus"></i>
                                                         </button>
                                                     </div>
@@ -72,40 +73,34 @@
                                         <table class="table table-striped table-bordered table-hover table-checkable order-column" id="sample_1">
                                             <thead>
                                                 <tr>
-                                                    <th>
-                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                            <input type="checkbox" class="group-checkable" data-set="#sample_1 .checkboxes" />
-                                                            <span></span>
-                                                        </label>
-                                                    </th>
-                                                    <th> Schools Name </th>
+                                                    <th> School Name </th>
+                                                    <th> School Address </th>
+                                                    <th> School Director </th>
                                                     <th> Actions </th>
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php 
-                                                require_once '../Firestore.php';
-                                                $fs = new Firestore('schools');
-                                                $documents = $fs->getDocuments();
-                                                foreach ($documents as $document) {
-                                                    $doc = $document->data();
+                                                require '../FirebaseCls.php';
+                                                $firebase = new FirebaseCls("schools");    
+                                                $schoolsFromFirebase = $firebase->get();
+                                                
+                                                foreach ($schoolsFromFirebase as $key => $value) {
+                                                            
                                                 ?>
                                                 <tr class="odd gradeX">
-                                                    <td>
-                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                            <input type="checkbox" class="checkboxes" value="1" />
-                                                            <span></span>
-                                                        </label>
-                                                    </td>
-                                                    <td> <?php echo $doc['name'] ?></td>
+
+                                                    <td> <?php echo $value['name'] ?></td>
+                                                    <td> <?php echo $value['address'] ?></td>
+                                                    <td> <?php echo $value['director'] ?></td>
 
 
                                                     <td>
                                                         <div class="btn-group">
-                                                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                                                <i class="fa fa-angle-down"></i>
-                                                            </button>
-
+                                                            <button class="btn btn-xs green dropdown-toggle" onclick="removeActivity('<?php echo $key ?>');" type="button" data-toggle="dropdown" aria-expanded="false" > Remove
+                                                               
+                                                               </button>
+   
                                                         </div>
                                                     </td>
                                                 </tr>
@@ -121,7 +116,7 @@
                             </div>
                         </div>
 
-
+                        </form>                             
                     </div>
                     <!-- END CONTENT BODY -->
                 </div>
@@ -143,7 +138,27 @@
         </div>
 
     </body>
+    <script>
+        function gotoAddpage(){
+            var formObj = document.getElementById("school_form");
+            formObj.action = "add.php";
+            formObj.submit();
+        }
 
+        function removeActivity(id){
+            alert("Are you sure delete school?");
+            $.ajax({
+                type: "POST",  
+                url: "remove_action.php",  
+                data: ({id: id}),
+                dataType: "json",       
+                success: function(response)  
+                {
+                   window.location.reload();
+                }   
+            });            
+        }         
+    </script>    
 </html>
 
 

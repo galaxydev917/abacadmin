@@ -88,13 +88,13 @@
                                             </thead>
                                             <tbody>
                                             <?php 
-                                                require_once '../Firestore.php';
-                                                $fs = new Firestore('activities');
-                                                $documents = $fs->getDocuments();
-                                                foreach ($documents as $document) {
-                                                    $doc = $document->data();
-                                                    $id = $document->id();
-                                                ?>
+                                                require '../FirebaseCls.php';
+                                                $firebase = new FirebaseCls("activities");    
+                                                $categoriesFromFirebase = $firebase->get();
+                                                
+                                                foreach ($categoriesFromFirebase as $key => $value) {
+                                                            
+                                            ?>
                                                 <tr class="odd gradeX">
                                                     <td>
                                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">

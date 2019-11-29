@@ -22,7 +22,31 @@
             $result = $database->getReference($this->name)->getValue();
             return $result;
         }
-        
+        public function addCategory($name, $meal, $filename){
+
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name)->push(['name'=> $name, "isMeal"=>$meal, "image"=>$filename ]);
+            return $result;
+        }  
+        public function removeCategory($id){
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name."/".$id)->remove();
+            return $result;
+        }
+
+        //school part starting-----
+        public function addSchool($name, $address, $director){
+
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name)->push(['name'=> $name, "address"=>$address, "director"=>$director ]);
+            return $result;
+        }  
+        public function removeSchools($id){
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name."/".$id)->remove();
+            return $result;
+        }
+
         public function getDocument(string $name){
             try{
                 if($this->db->collection($this->name)->document($name)->snapshot()->exists()){

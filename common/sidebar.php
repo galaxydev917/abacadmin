@@ -10,16 +10,40 @@
                             <li class="nav-item start open">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="icon-social-dribbble"></i>
-                                    <span class="title">Activity</span>
+                                    <span class="title">Category</span>
                                     <span class="arrow"></span>
                                 </a>
                                 <ul class="sub-menu">
                                     <li class="nav-item start ">
-                                        <a href="../activity/category.php" class="nav-link ">
+                                        <a href="../category/category.php" class="nav-link ">
                                             <i class="icon-pencil"></i>
                                             <span class="title">Category</span>
                                         </a>
                                     </li>
+                                </ul>
+                            </li> 
+                            <li class="nav-item start">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-users"></i>
+                                    <span class="title">Schools</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
+                                    <li class="nav-item start ">
+                                        <a href="../schools/schools.php" class="nav-link ">
+                                            <i class="icon-user"></i>
+                                            <span class="title">Schools</span>
+                                        </a>
+                                    </li>
+                                </ul>
+                            </li>                               
+                            <li class="nav-item start">
+                                <a href="javascript:;" class="nav-link nav-toggle">
+                                    <i class="icon-social-dribbble"></i>
+                                    <span class="title">Activity</span>
+                                    <span class="arrow"></span>
+                                </a>
+                                <ul class="sub-menu">
                                     <li class="nav-item start ">
                                         <a href="../activity/list.php" class="nav-link ">
                                             <i class="icon-notebook"></i>
@@ -52,21 +76,7 @@
                                     
                                   </ul>
                             </li>
-                            <li class="nav-item start">
-                                <a href="javascript:;" class="nav-link nav-toggle">
-                                    <i class="icon-users"></i>
-                                    <span class="title">Schools</span>
-                                    <span class="arrow"></span>
-                                </a>
-                                <ul class="sub-menu">
-                                    <li class="nav-item start ">
-                                        <a href="../schools/schools.php" class="nav-link ">
-                                            <i class="icon-user"></i>
-                                            <span class="title">Schools</span>
-                                        </a>
-                                    </li>
-                                </ul>
-                            </li>                            
+                          
                             <li class="nav-item start">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="icon-wrench"></i>
