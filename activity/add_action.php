@@ -24,12 +24,10 @@
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
+    $data = ['name'=> $name, 'categoryId'=> $categoryId, 'school'=> $school, 'price'=> $price, 'duration'=> $duration, 'description'=> $description, 'start_date'=> $startdate, 'end_date'=> $enddate, 'isMeal'=> $meal, 'image'=> $filename,];
 
-    require_once '../Firestore.php';
-    $fs = new Firestore('activities');
-    $fs->addDocument('galaxy917', ['categoryId' => $categoryId, 'schoolId' => $school, 
-                                   'name' => $name, 'price' => $price, 'duration_hrs' => $duration, 'description' => $description,
-                                   'image' => $filename, 'start_date' => $startdate, 'end_date' => $enddate,
-                                   'isMeal' => $meal ]);
+    require '../FirebaseCls.php';
+    $firebase = new FirebaseCls("activities");
+    $result = $firebase->addActivity($data);    
     header("location:list.php");
 ?>

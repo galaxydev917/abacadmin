@@ -61,7 +61,7 @@ License: You must have a valid license purchased only from themeforest(the above
                     <!-- BEGIN LOGO -->
                     <div class="page-logo">
                         <a href="index.html">
-                            <img src="../assets/layouts/layout/img/logo.png" alt="logo" class="logo-default" /> </a>
+                            <img src="../assets/layouts/layout/img/logo-icon.png" alt="logo" class="logo-default" /> </a>
                         <div class="menu-toggler sidebar-toggler">
                             <span></span>
                         </div>
@@ -108,137 +108,43 @@ License: You must have a valid license purchased only from themeforest(the above
 
                                     <div class="portlet-body">
                                         <!-- BEGIN FORM-->
-                                        <form action="#" id="add_activity" method="post" class="form-horizontal" enctype="multipart/form-data">
+                                        <form action="#" id="add_parents" method="post" class="form-horizontal" enctype="multipart/form-data">
                                             <div class="form-body">
                                                 <div class="alert alert-danger display-hide">
                                                     <button class="close" data-close="alert"></button> You have some form errors. Please check below. </div>
                                                 <div class="alert alert-success display-hide">
                                                     <button class="close" data-close="alert"></button> Your form validation is successful! </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3">Activity Name
+                                                    <label class="control-label col-md-3">Parent Name
                                                         <span class="required"> * </span>
                                                     </label>
                                                     <div class="col-md-4">
                                                         <input type="text" name="name" id="name" data-required="1" class="form-control" /> </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3">Description
+                                                    <label class="control-label col-md-3">Parent Email
                                                         <span class="required"> * </span>
                                                     </label>
                                                     <div class="col-md-4">
-                                                        <textarea name="description" id="description" data-required="1" class="form-control"></textarea> </div>
-                                                </div>                                                
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Activity Image
-                                                        <span class="required"> * </span>
-                                                    </label>
-                                                    <div class="col-md-4">
-                                                    <input type="file" name="fileToUpload" id="fileToUpload" class="form-control"></div>
+                                                        <input type="text" name="email" id="email" data-required="1" class="form-control" /> </div>
                                                 </div>
                                                 <div class="form-group">
-                                                    <label class="control-label col-md-3">Category
+                                                    <label class="control-label col-md-3">Parent Phone
                                                         <span class="required"> * </span>
                                                     </label>
                                                     <div class="col-md-4">
-                                                        <select class="form-control select2me" name="category">
-                                                            <option value="">Select...</option>
-                                                            <?php 
-                                                                require '../FirebaseCls.php';
-                                                                $firebase = new FirebaseCls("categories");    
-                                                                $categoriesFromFirebase = $firebase->get();
-                                                                foreach ($categoriesFromFirebase as $key => $value) {
-                                                            ?>
-                                                            <option value="<?php echo $key; ?>"><?php echo $value['name']; ?></option>
-                                                            <?php }?>
-                                                        </select>
-                                                    </div>
-                                                </div>  
-                                                 
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Schools
-                                                        <span class="required"> * </span>
-                                                    </label>
-                                                    <div class="col-md-4">
-                                                        <select class="form-control select2me" name="school">
-                                                            <option value="">Select...</option>
-                                                            <?php 
-                                                                $firebase = new FirebaseCls("schools");    
-                                                                $schoolsFromFirebase = $firebase->get();
-                                                                
-                                                                foreach ($schoolsFromFirebase as $key => $value) {
-                                                            
-                                                                ?>
-                                                            <option value="<?php echo $key; ?>"><?php echo $value['name']; ?></option>
-                                                            <?php }?>
-                                                        </select>
-                                                    </div>
-                                                </div>   
+                                                        <input type="text" name="phonenumber" id="phonenumber" data-required="1" class="form-control" /> </div>
+                                                </div>
 
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Price&nbsp;&nbsp;</label>
-                                                    <div class="col-md-4">
-                                                        <input name="price" type="text" class="form-control" /> </div>
-                                                    </div>
-                                                </div> 
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Duration Hours&nbsp;&nbsp;</label>
-                                                    <div class="col-md-4">
-                                                        <input name="duration" type="text" class="form-control" /> </div>
-                                                </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Start Date</label>
-                                                    <div class="col-md-4">
-                                                        <div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
-                                                            <input type="text" class="form-control" readonly name="startdate">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span>
+                                                <div class="form-actions">
+                                                    <div class="row">
+                                                        <div class="col-md-offset-3 col-md-9">
+                                                            <button type="button" class="btn green" onclick="addAction();">Submit</button>
+                                                            <button type="button" class="btn default">Cancel</button>
                                                         </div>
-                                                        <!-- /input-group -->
                                                     </div>
                                                 </div>
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">End Date</label>
-                                                    <div class="col-md-4">
-                                                        <div class="input-group date date-picker" data-date-format="dd-mm-yyyy">
-                                                            <input type="text" class="form-control" readonly name="enddate">
-                                                            <span class="input-group-btn">
-                                                                <button class="btn default" type="button">
-                                                                    <i class="fa fa-calendar"></i>
-                                                                </button>
-                                                            </span>
-                                                        </div>
-                                                        <!-- /input-group -->
-                                                    </div>
-                                                </div>                                                
-
-                                                <div class="form-group">
-                                                    <label class="control-label col-md-3">Meal
-                                                        <span class="required"> * </span>
-                                                    </label>
-                                                    <div class="col-md-4">
-                                                        <div class="mt-checkbox-list" data-error-container="#form_2_services_error">
-                                                            <label class="mt-checkbox">
-                                                                <input type="checkbox" value="1" name="meal" /> Meal
-                                                                <span></span>
-                                                            </label>
-                                                        </div>
-
-                                                    </div>
-                                                </div>
-
-
-                                            </div>
-                                            <div class="form-actions">
-                                                <div class="row">
-                                                    <div class="col-md-offset-3 col-md-9">
-                                                        <button type="submit" class="btn green" onclick="addAction();">Submit</button>
-                                                        <button type="button" class="btn default">Cancel</button>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                                
                                         </form>
                                         <!-- END FORM-->
                                     </div>
@@ -254,13 +160,6 @@ License: You must have a valid license purchased only from themeforest(the above
             <!-- END CONTAINER -->
             <!-- BEGIN FOOTER -->
             <div class="page-footer">
-                <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                    <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                    <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-                </div>
-                <div class="scroll-to-top">
-                    <i class="icon-arrow-up"></i>
-                </div>
             </div>
             <!-- END FOOTER -->
         </div>
@@ -298,8 +197,8 @@ License: You must have a valid license purchased only from themeforest(the above
         <!-- END THEME LAYOUT SCRIPTS -->
         <script>
             function addAction(){
-                var objForm = document.getElementById("add_activity");
-                objForm.action = "add_action.php";
+                var objForm = document.getElementById("add_parents");
+                objForm.action = "add_parentsaction.php";
                 objForm.submit();
                 
             }

@@ -47,57 +47,39 @@
             return $result;
         }
 
-        public function getDocument(string $name){
-            try{
-                if($this->db->collection($this->name)->document($name)->snapshot()->exists()){
-                    return $this->db->collection($this->name)->document($name)->snapshot()->data();
-                }else{
-                    throw new Exception( "Document are not exist");
-                }
-            }catch(Exception $exception){
-                return $exception->getMessage();
-            }
+        //parents part starting-----
+        public function addParents($name, $email, $phonenumber){
+
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name)->push(['fullName'=> $name, "email"=>$email, "phonenumber"=>$phonenumber ]);
+            return $result;
+        }  
+        public function addChild($name, $email, $phonenumber){
+
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name)->push(['fullName'=> $name, "email"=>$email, "phonenumber"=>$phonenumber ]);
+            return $result;
+        }  
+
+        //activities part starting-----
+        public function addActivity($data){
+
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name)->push($data);
+            return $result;
+        }  
+        public function removeActivities($id){
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name."/".$id)->remove();
+            return $result;
         }
+        public function addActivityDetail($data, $id){
 
-        public function getWhere(string $field, string $operator, $value){
-            $arr = [];
-            $query = $this->db->collection($this->name)->where($field, $operator, $value)->documents()->rows();
-            if(!empty($query)){
-                foreach($query as $item){
-                    $arr[] = $item->data();
-                }
-            }
-            return $arr;
-        }
+            $database = $this->firebase->getDatabase(); 
+            $result = $database->getReference($this->name."/".$id)->update($data);
+            return $result;
+        }  
 
-        public function addDocument(string $name, array $data = []){
-            try{
-               // $this->db->collection($this->name)->document($name)->create($data);
-
-               // add document with auto id 
-                $addedDocRef = $this->db->collection($this->name)->newDocument();
-                $addedDocRef->set($data);
-
-                return true;
-            }
-            catch(Exeption $exception){
-                return $exception->getMessage();
-            }
-        }
-
-        public function addCollection(string $name, string $doc_name, array $data = []){
-            try{
-                $this->db->collection($name)->document($doc_name)->create($data);
-                return true;
-            }
-            catch(Exeption $exception){
-                return $exception->getMessage();
-            }
-        }
-
-        public function dropDocument(string $name){
-            $this->db->collection($this->name)->document($name)->delete();
-        }
 
     }
 

@@ -9,7 +9,7 @@
                             <!-- DOC: To remove the search box from the sidebar you just need to completely remove the below "sidebar-search-wrapper" LI element -->
                             <li class="nav-item start open">
                                 <a href="javascript:;" class="nav-link nav-toggle">
-                                    <i class="icon-social-dribbble"></i>
+                                    <i class="icon-pencil"></i>
                                     <span class="title">Category</span>
                                     <span class="arrow"></span>
                                 </a>
@@ -77,7 +77,7 @@
                                   </ul>
                             </li>
                           
-                            <li class="nav-item start">
+                            <!-- <li class="nav-item start">
                                 <a href="javascript:;" class="nav-link nav-toggle">
                                     <i class="icon-wrench"></i>
                                     <span class="title">Orders</span>
@@ -91,5 +91,5 @@
                                         </a>
                                     </li>
                                   </ul>
-                            </li>                            
+                            </li>                             -->
                         </ul>

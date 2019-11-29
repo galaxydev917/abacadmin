@@ -46,6 +46,7 @@
                 <div class="page-content-wrapper">
                     <!-- BEGIN CONTENT BODY -->
                     <div class="page-content">
+                    <form id="parents_form" method="post">
 
                         <div class="row">
                             <div class="col-md-12">
@@ -61,11 +62,9 @@
                                         <div class="table-toolbar">
                                             <div class="row">
                                                 <div class="col-md-6">
-                                                    <div class="btn-group">
-                                                        <button id="sample_editable_1_new" class="btn sbold green"> Add New
-                                                            <i class="fa fa-plus"></i>
-                                                        </button>
-                                                    </div>
+                                                    <!-- <button id="sample_editable_1_new" class="btn sbold green"  onclick="gotoAddpage();"> Add New
+                                                                <i class="fa fa-plus"></i>
+                                                    </button> -->
                                                 </div>
                                             </div>
                                         </div>
@@ -80,17 +79,19 @@
                                                     </th>
                                                     <th> Parent Full Name </th>
                                                     <th> Email </th>
-                                                    <th> Actions </th>
+                                                    <th> Phone Number </th>
+                                                    <!-- <th> Actions </th> -->
                                                 </tr>
                                             </thead>
                                             <tbody>
                                             <?php 
-                                                require_once '../Firestore.php';
-                                                $fs = new Firestore('parents');
-                                                $documents = $fs->getDocuments();
-                                                foreach ($documents as $document) {
-                                                    $doc = $document->data();
-                                                ?>
+                                                require '../FirebaseCls.php';
+                                                $firebase = new FirebaseCls("parents");    
+                                                $parentsFromFirebase = $firebase->get();
+                                                
+                                                foreach ($parentsFromFirebase as $key => $value) {
+                                                            
+                                            ?>
                                                 <tr class="odd gradeX">
                                                     <td>
                                                         <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
@@ -98,12 +99,12 @@
                                                             <span></span>
                                                         </label>
                                                     </td>
-                                                    <td> <?php echo $doc['fullName'] ?></td>
+                                                    <td> <?php echo $value['fullName'] ?></td>
                                                     <td>
-                                                        <a href="mailto:userwow@gmail.com"> <?php echo $doc['email'] ?> </a>
+                                                        <a href="mailto:userwow@gmail.com"> <?php echo $value['email'] ?> </a>
                                                     </td>
-
-                                                    <td>
+                                                    <td> <?php echo $value['phonenumber'] ?></td>
+                                                    <!-- <td>
                                                         <div class="btn-group">
                                                             <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
                                                                 <i class="fa fa-angle-down"></i>
@@ -118,8 +119,8 @@
                                                                         <i class="icon-tag"></i> New Comment </a>
                                                                 </li>
                                                                 <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="icon-user"></i> New User </a>
+                                                                    <a onclick="addChild('<?php echo $key ?>');">
+                                                                        <i class="icon-user"></i> Add Child </a>
                                                                 </li>
                                                                 <li class="divider"> </li>
                                                                 <li>
@@ -130,7 +131,7 @@
                                                                 </li>
                                                             </ul>
                                                         </div>
-                                                    </td>
+                                                    </td> -->
                                                 </tr>
                                                 <?php                                                
                                                  }
@@ -144,7 +145,7 @@
                             </div>
                         </div>
 
-
+                    </form>                             
                     </div>
                     <!-- END CONTENT BODY -->
                 </div>
@@ -154,19 +155,30 @@
             <!-- END CONTAINER -->
             <!-- BEGIN FOOTER -->
             <div class="page-footer">
-                <div class="page-footer-inner"> 2016 &copy; Metronic Theme By
-                    <a target="_blank" href="http://keenthemes.com">Keenthemes</a> &nbsp;|&nbsp;
-                    <a href="http://themeforest.net/item/metronic-responsive-admin-dashboard-template/4021469?ref=keenthemes" title="Purchase Metronic just for 27$ and get lifetime updates for free" target="_blank">Purchase Metronic!</a>
-                </div>
-                <div class="scroll-to-top">
-                    <i class="icon-arrow-up"></i>
-                </div>
             </div>
             <!-- END FOOTER -->
         </div>
 
     </body>
-
+    <script>
+        function gotoAddpage(){
+            var formObj = document.getElementById("parents_form");
+            formObj.action = "add_parents.php";
+            formObj.submit();
+        }
+        function addChild(id){
+            $.ajax({
+                type: "POST",  
+                url: "add_child.php",  
+                data: ({id: id}),
+                dataType: "json",       
+                success: function(response)  
+                {
+                   window.location.reload();
+                }   
+            });             
+        }        
+    </script>    
 </html>
 
 
