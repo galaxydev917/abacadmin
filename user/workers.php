@@ -88,7 +88,7 @@
                                             <tbody>
                                             <?php 
                                                 require '../FirebaseCls.php';
-                                                $firebase = new FirebaseCls("parents");    
+                                                $firebase = new FirebaseCls("workers");    
                                                 $workersFromFirebase = $firebase->get();
                                                 
                                                 foreach ($workersFromFirebase as $key => $value) {
