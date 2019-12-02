@@ -65,7 +65,12 @@
         public function addActivity($data){
 
             $database = $this->firebase->getDatabase(); 
-            $result = $database->getReference($this->name)->push($data);
+            $id = $database->getReference($this->name)->push($data)->getKey();
+
+            $id_array = ["id"=>$id];
+            $data = array_merge($data, $id_array);
+            $result = $database->getReference($this->name."/".$id)->update($data);
+
             return $result;
         }  
         public function removeActivities($id){
