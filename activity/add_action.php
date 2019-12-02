@@ -24,8 +24,9 @@
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
-    $data = ['name'=> $name, 'categoryId'=> $categoryId, 'school'=> $school, 'price'=> $price, 'duration'=> $duration, 'description'=> $description, 'start_date'=> $startdate, 'end_date'=> $enddate, 'isMeal'=> $meal, 'image'=> $filename,];
+    $filePath = "https://abacadmin.herokuapp.com/assets/images/activity/" .$filename;
 
+    $data = ['name'=> $name, 'categoryId'=> $categoryId, 'schoolId'=> $school, 'price'=> $price, 'duration_hrs'=> $duration, 'description'=> $description, 'start_date'=> $startdate, 'end_date'=> $enddate, 'isMeal'=> $meal, 'image'=> $filePath,];
     require '../FirebaseCls.php';
     $firebase = new FirebaseCls("activities");
     $result = $firebase->addActivity($data);    

@@ -17,10 +17,11 @@
     } else {
         echo "Sorry, there was an error uploading your file.";
     }
+    $filePath = "https://abacadmin.herokuapp.com/assets/images/activity/" .$filename;
 
     require '../FirebaseCls.php';
     $firebase = new FirebaseCls("categories");
-    $result = $firebase->addCategory($name, $meal, $filename);    
+    $result = $firebase->addCategory($name, $meal, $filePath);    
 
     header("location:category.php");
 ?>
