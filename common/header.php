@@ -28,6 +28,7 @@
         <link href="../assets/layouts/layout/css/themes/darkblue.min.css" rel="stylesheet" type="text/css" id="style_color" />
         <link href="../assets/layouts/layout/css/custom.min.css" rel="stylesheet" type="text/css" />
         <!-- END THEME LAYOUT STYLES -->
+        <link href="../assets/apps/css/chat.css" rel="stylesheet" type="text/css" />
         <link rel="shortcut icon" href="favicon.ico" /> 
             <!-- BEGIN CORE PLUGINS -->
             <script src="../assets/global/plugins/jquery.min.js" type="text/javascript"></script>
@@ -63,5 +64,7 @@
                 });
             })
         </script>
+        <input type="hidden" value="" name="selUserId" id="selUserId" />
+        <input type="hidden" value="" name="selUserToken" id="selUserToken" />
     </head>
     <!-- END HEAD -->

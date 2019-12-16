@@ -1,5 +1,11 @@
 
  <?php require_once '../common/header.php';?>
+ 
+ <?php 
+    require '../FirebaseCls.php';
+    $firebase = new FirebaseCls("parents");    
+    $parentsFromFirebase = $firebase->get();
+?>
     <body class="page-header-fixed page-sidebar-closed-hide-logo page-content-white">
         <div class="page-wrapper">
             <!-- BEGIN HEADER -->
@@ -84,55 +90,22 @@
                                                 </tr>
                                             </thead>
                                             <tbody>
-                                            <?php 
-                                                require '../FirebaseCls.php';
-                                                $firebase = new FirebaseCls("parents");    
-                                                $parentsFromFirebase = $firebase->get();
-                                                
-                                                foreach ($parentsFromFirebase as $key => $value) {
-                                                            
-                                            ?>
-                                                <tr class="odd gradeX">
-                                                    <td>
-                                                        <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
-                                                            <input type="checkbox" class="checkboxes" value="1" />
-                                                            <span></span>
-                                                        </label>
-                                                    </td>
-                                                    <td> <?php echo $value['fullName'] ?></td>
-                                                    <td>
-                                                        <a href="mailto:userwow@gmail.com"> <?php echo $value['email'] ?> </a>
-                                                    </td>
-                                                    <td> <?php echo $value['phonenumber'] ?></td>
-                                                    <!-- <td>
-                                                        <div class="btn-group">
-                                                            <button class="btn btn-xs green dropdown-toggle" type="button" data-toggle="dropdown" aria-expanded="false"> Actions
-                                                                <i class="fa fa-angle-down"></i>
-                                                            </button>
-                                                            <ul class="dropdown-menu" role="menu">
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="icon-docs"></i> New Post </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="icon-tag"></i> New Comment </a>
-                                                                </li>
-                                                                <li>
-                                                                    <a onclick="addChild('<?php echo $key ?>');">
-                                                                        <i class="icon-user"></i> Add Child </a>
-                                                                </li>
-                                                                <li class="divider"> </li>
-                                                                <li>
-                                                                    <a href="javascript:;">
-                                                                        <i class="icon-flag"></i> Comments
-                                                                        <span class="badge badge-success">4</span>
-                                                                    </a>
-                                                                </li>
-                                                            </ul>
-                                                        </div>
-                                                    </td> -->
-                                                </tr>
+                                                <?php 
+                                                    foreach ($parentsFromFirebase as $key => $value) {
+                                                ?>
+                                                    <tr class="odd gradeX">
+                                                        <td>
+                                                            <label class="mt-checkbox mt-checkbox-single mt-checkbox-outline">
+                                                                <input type="checkbox" class="checkboxes" value="1" />
+                                                                <span></span>
+                                                            </label>
+                                                        </td>
+                                                        <td> <?php echo $value['fullName'] ?></td>
+                                                        <td>
+                                                            <a href="mailto:userwow@gmail.com"> <?php echo $value['email'] ?> </a>
+                                                        </td>
+                                                        <td> <?php echo $value['phone'] ?></td>
+                                                    </tr>
                                                 <?php                                                
                                                  }
                                                 ?>                                                
@@ -155,30 +128,79 @@
             <!-- END CONTAINER -->
             <!-- BEGIN FOOTER -->
             <div class="page-footer">
+                <button class="open-button" onclick="openForm()">Open Chat</button>
+                <div class="chat-popup" id="myForm">
+                    <div class="chat-container">
+                        <button type="button" class="close-button" onclick="closeForm()">Close Chat</button>
+                        <div class="chat-user-content">
+                            <?php foreach ($parentsFromFirebase as $key => $value) {?>
+                                <div class="chat-row" role="user">
+                                    <ul class="chat-user-item">
+                                        <li onclick="javascript:doSelChatUser(this, 0);">
+                                            <a>
+                                                <span>
+                                                    <img src="" class="img-circle" alt="" />
+                                                </span>
+                                                <span class="chat-name"><?php echo $value["fullName"];?></span>
+                                                <input type="hidden" value="<?php echo $value["uid"];?>" />
+                                                <input type="hidden" value="eMufhVQQE2Q:APA91bHDDkXedOwQyoCKEp5t2Zxkcav6iJp-QGGWZuBbvaQX1Np8PFFXRxATJSI04cPIONlKso7tt1tNWxFu1EOULUk3BpXrRJZV2yX0BgVpBAJYIday9m32QuS5Fmnik7Ysy_vGUNut" />
+                                            </a>
+                                        </li>
+                                    </ul>
+                                </div>
+                            <?php }?>
+                            </div>
+                        <input type="text" placeholder="Type message here" name="msg" required onkeypress="javascript:doSendMessage(this, event);" />
+                    </div>
+                </div>
             </div>
             <!-- END FOOTER -->
         </div>
+        <script>
+            function gotoAddpage(){
+                var formObj = document.getElementById("parents_form");
+                formObj.action = "add_parents.php";
+                formObj.submit();
+            }
+            function addChild(id){
+                $.ajax({
+                    type: "POST",  
+                    url: "add_child.php",  
+                    data: ({id: id}),
+                    dataType: "json",       
+                    success: function(response)  
+                    {
+                    window.location.reload();
+                    }   
+                });             
+            } 
+            function openForm() {
+                document.getElementById("myForm").style.display = "block";
+            }
 
-    </body>
-    <script>
-        function gotoAddpage(){
-            var formObj = document.getElementById("parents_form");
-            formObj.action = "add_parents.php";
-            formObj.submit();
-        }
-        function addChild(id){
-            $.ajax({
-                type: "POST",  
-                url: "add_child.php",  
-                data: ({id: id}),
-                dataType: "json",       
-                success: function(response)  
-                {
-                   window.location.reload();
-                }   
-            });             
-        }        
-    </script>    
-</html>
+            function closeForm() {
+                document.getElementById("myForm").style.display = "none";
+            }
+            
+            function doSelChatUser(obj, type) {
+                if (type == 0) {
+                    var selUserId = obj.childNodes.item(1).childNodes.item(5).value;
+                    var selUserToken = obj.childNodes.item(1).childNodes.item(7).value;
+                    document.getElementById("selUserId").value = selUserId;
+                    document.getElementById("selUserToken").value = selUserToken;
+                }
+            }
+
+            function doSendMessage(txtObj, evt) {
+                evt = (evt) ? evt : event;
+                var charCode = (evt.charCode) ? evt.charCode : ((evt.keyCode) ? evt.keyCode : ((evt.which) ? evt.which : 0));
+                if( txtObj.value == "" ) {
+                    return false;
+                } else if( charCode == 13 ) {
+                    
+                }
+            }
+        </script> 
+    <?php require_once '../common/footer.php';?> 
 
 
